@@ -24,7 +24,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => Movies(),
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Roboto',
+        ),
         title: 'My Movies App',
         home: MyHomePage(),
       ),
@@ -57,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF716850),
-        title: const Text('Trending', style: TextStyle(color: Colors.black)),
+        title: const Text('Trending', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             onPressed: () {},
