@@ -16,7 +16,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
   bool isOnTop = true;
   bool isLoading = false;
   final _scrollController = ScrollController();
-
+  int _listSize = 5;
   @override
   void initState() {
     super.initState();
@@ -27,8 +27,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
           isOnTop = false;
         });
       }
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.offset >= _scrollController.position.maxScrollExtent) {
         setState(() {
           isLoading = true;
         });
@@ -46,6 +45,9 @@ class _TrendingScreenState extends State<TrendingScreen> {
       const Duration(seconds: 2),
     );
     setState(() {
+      if(_listSize < Provider.of<Movies>(context, listen: false).movies.length - 5){
+        _listSize += 5;
+      }
       isLoading = false;
     });
   }
@@ -53,7 +55,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
     if (_scrollController.offset > 0) {
       _scrollController.animateTo(
         0,
-        duration: Duration(milliseconds: 300),
+        duration: Duration(milliseconds: 100 * _listSize),
         curve: Curves.easeOut,
       ).then((value) => setState(() {
         isOnTop = true;
@@ -82,7 +84,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
         children: [
           Container(
             color: Color(0xFF716850),
-            padding: EdgeInsets.only(bottom: 25),
+            padding: EdgeInsets.only(bottom: isLoading ? 25 : 0),
             child: Consumer<Movies>(
               builder: (context,movies, _){
                 return movies.movies.isEmpty
@@ -91,7 +93,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                   onRefresh: () => _refreshMovies(context),
                   child: ListView.builder(
                       controller: _scrollController,
-                      itemCount: movies.movies.length,
+                      itemCount: _listSize,
                       itemBuilder: (context, item){
                         return TrendingItem(
                           id: movies.movies[item].id!,
@@ -133,7 +135,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
             child: Row(
               children: [
                 Icon(Icons.arrow_circle_up),
-                Text('TOP', style: TextStyle(fontSize: 8, color: Colors.black, fontWeight: FontWeight.bold))
+                Text('TOP', style: TextStyle(fontSize: 8, color: Colors.black, fontWeight: FontWeight.bold)),
               ],
             ),
           ),

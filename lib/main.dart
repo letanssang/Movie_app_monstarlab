@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:movie_app/screens/movie_detail_screen.dart';
 import 'package:movie_app/screens/trending_screen.dart';
 import './models/movies.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         title: 'My Movies App',
         home: MyHomePage(),
         routes: {
-          TrendingScreen.routeName: (context) => const TrendingScreen()
+          TrendingScreen.routeName: (context) => const TrendingScreen(),
+          MovieDetailScreen.routeName: (context) => const MovieDetailScreen(),
         },
       ),
     );

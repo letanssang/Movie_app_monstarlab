@@ -27,7 +27,11 @@ class _MoviesTabScreenState extends State<MoviesTabScreen> {
                       childAspectRatio: 0.625,
                     ),
                     itemBuilder: (context, item) {
-                      return Container(
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/detail',
+                              arguments: movies.movies[item].id);
+                        },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(

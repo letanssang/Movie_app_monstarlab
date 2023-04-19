@@ -18,4 +18,7 @@ class Movies with ChangeNotifier {
     _movies = list.map((e) => Movie.fromJson(e)).toList();
     notifyListeners();
   }
+  Movie findById(int id) {
+    return _movies.firstWhere((element) => element.id == id);
+  }
 }

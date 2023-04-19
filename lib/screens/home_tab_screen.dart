@@ -40,6 +40,10 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               itemCount: 6,
               itemBuilder: (context, index) {
                 return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/detail',
+                        arguments: movies.movies[index].id);
+                  },
                   onPanUpdate: (details) {
                     if (details.delta.dx > 0) {
                       _pageController.previousPage(
@@ -118,15 +122,21 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: movies.movies.length,
-                    itemBuilder: (context, index) => AspectRatio(
-                      aspectRatio: 0.625,
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 11),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://image.tmdb.org/t/p/w500${movies.movies[index].posterPath}',
-                            fit: BoxFit.cover,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/detail',
+                            arguments: movies.movies[index].id);
+                      },
+                      child: AspectRatio(
+                        aspectRatio: 0.625,
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 11),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w500${movies.movies[index].posterPath}',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
