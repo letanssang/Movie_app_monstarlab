@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'movie_rating.dart';
+import '../../widgets/movie_rating.dart';
 class TrendingItem extends StatefulWidget {
   final int id;
   final String title;

@@ -1,66 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import '../services/movies.dart';
+import 'package:movie_app/ui/home_tab_page/view_model/home_tab_view_model.dart';
 
-class HomeTabScreen extends StatefulWidget {
-  const HomeTabScreen({Key? key}) : super(key: key);
+import '../../services/movies.dart';
+
+class HomeTabScreen extends ConsumerWidget {
+  HomeTabScreen({Key? key});
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   _pageController.addListener(() {
+  //     setState(() {
+  //       _currentPage = _pageController.page!;
+  //     });
+  //   });
+  //   super.initState();
+  // }
 
   @override
-  State<HomeTabScreen> createState() => _HomeTabScreenState();
-}
-
-class _HomeTabScreenState extends State<HomeTabScreen> {
-  final _pageController = PageController(initialPage: 1, viewportFraction: 0.65);
-  double _currentPage = 1;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!;
-      });
+  Widget build(BuildContext context, WidgetRef ref) {
+    final movies = ref.watch(moviesProvider);
+    final state = ref.watch(homeTabViewModelProvider);
+    final pageController = state.pageController;
+    pageController.addListener(() {
+      ref.read(homeTabViewModelProvider.notifier).updateCurrentPage(pageController.page!);
     });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<Movies>(
-      builder: (context, movies, _) => movies.movies.isEmpty
-          ? const CircularProgressIndicator()
-          : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Flexible(
           flex: 2,
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: PageView.builder(
-              controller: _pageController,
+              controller: pageController,
               itemCount: 6,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed('/detail',
-                        arguments: movies.movies[index].id);
+                        arguments: movies[index].id);
                   },
                   onPanUpdate: (details) {
                     if (details.delta.dx > 0) {
-                      _pageController.previousPage(
+                      pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeOut,
                       );
                     } else if (details.delta.dx < 0) {
-                      _pageController.nextPage(
+                      pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeOut,
                       );
                     }
                   },
                   child: AnimatedBuilder(
-                    animation: _pageController,
+                    animation: pageController,
                     builder: (context, child) {
-                      double value = _pageController.position.haveDimensions ? _pageController.page! - index : 0;
+                      double value = pageController.position.haveDimensions ? pageController.page! - index : 0;
                       value = (1 - (value.abs() * 0.2)).clamp(0.0, 1.0);
                       return Transform.scale(
                         scale: value,
@@ -83,7 +80,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               child: Image.network(
-                                'https://image.tmdb.org/t/p/w500${movies.movies[index].posterPath}',
+                                'https://image.tmdb.org/t/p/w500${movies[index].posterPath}',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -105,7 +102,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                       color: Color(0xFFBD9E9E),
                       activeColor: Color(0xFFF36464),
                     ),
-                    position: _currentPage,
+                    position: state.currentPage,
                     dotsCount: 6),
               ),
               const Padding(
@@ -121,11 +118,11 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: movies.movies.length,
+                    itemCount: movies.length,
                     itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
                         Navigator.of(context).pushNamed('/detail',
-                            arguments: movies.movies[index].id);
+                            arguments: movies[index].id);
                       },
                       child: AspectRatio(
                         aspectRatio: 0.625,
@@ -134,7 +131,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              'https://image.tmdb.org/t/p/w500${movies.movies[index].posterPath}',
+                              'https://image.tmdb.org/t/p/w500${movies[index].posterPath}',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -144,7 +141,6 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                   ),
                 ),
               ),
-            ]),
-    );
+            ]);
   }
 }

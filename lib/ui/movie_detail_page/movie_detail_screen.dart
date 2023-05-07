@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../services/movies.dart';
-import 'widgets/movie_rating.dart';
+import '../../services/movies.dart';
+import '../widgets/movie_rating.dart';
 
 class MovieDetailScreen extends ConsumerWidget {
   static const routeName = '/detail';

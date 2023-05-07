@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../services/movies.dart';
+import '../../services/movies.dart';
 
 
-class MoviesTabScreen extends StatefulWidget {
-  const MoviesTabScreen({Key? key}) : super(key: key);
+class MoviesTabPage extends ConsumerWidget {
+  const MoviesTabPage({super.key});
 
   @override
-  State<MoviesTabScreen> createState() => _MoviesTabScreenState();
-}
-
-class _MoviesTabScreenState extends State<MoviesTabScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<Movies>(
-        builder: (context, movies, _) => movies.movies.isEmpty
-            ? const CircularProgressIndicator()
-            : Padding(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final movies = ref.watch(moviesProvider);
+    return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                    itemCount: movies.movies.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    itemCount: movies.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 30,
@@ -31,17 +24,17 @@ class _MoviesTabScreenState extends State<MoviesTabScreen> {
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).pushNamed('/detail',
-                              arguments: movies.movies[item].id);
+                              arguments: movies[item].id);
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            'https://image.tmdb.org/t/p/w500${movies.movies[item].posterPath}',
+                            'https://image.tmdb.org/t/p/w500${movies[item].posterPath}',
                             fit: BoxFit.cover,
                           ),
                         ),
                       );
                     }),
-              ));
+              );
   }
 }
