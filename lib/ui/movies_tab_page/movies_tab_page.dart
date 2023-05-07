@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/movies.dart';
+import '../services/movies.dart';
+
 
 class MoviesTabScreen extends StatefulWidget {
   const MoviesTabScreen({Key? key}) : super(key: key);

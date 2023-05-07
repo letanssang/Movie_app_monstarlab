@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/widgets/movie_rating.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../models/movies.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MovieDetailScreen extends StatefulWidget {
+import '../services/movies.dart';
+import 'widgets/movie_rating.dart';
+
+class MovieDetailScreen extends ConsumerWidget {
   static const routeName = '/detail';
 
-  const MovieDetailScreen({ Key? key}) : super(key: key);
+  const MovieDetailScreen({super.key});
 
   @override
-  State<MovieDetailScreen> createState() => _MovieDetailScreenState();
-}
-
-class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final id = ModalRoute
         .of(context)!
         .settings
         .arguments as int;
-    final movie = Provider.of<Movies>(context).findById(id);
+    final movie = ref.watch(moviesProvider.notifier).findById(id);
     return Scaffold(
       body: Container(
         width: MediaQuery
@@ -31,7 +26,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             .of(context)
             .size
             .height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFF716850),
         ),
         child: Column(
@@ -52,7 +47,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         .height * 0.5,
                   ),
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -88,7 +83,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 ],
               ),
             ),
-            Flexible(child: Container(
+            Flexible(child: SizedBox(
               width: MediaQuery
                   .of(context)
                   .size
@@ -102,8 +97,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Column(
                         children: [
                           MovieRating(voteAverage: movie.voteAverage!),
-                          Text(movie.title!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                          Text(movie.releaseDate!, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                          Text(movie.title!, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                          Text(movie.releaseDate!, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
                         ],
                       ),
                     ),

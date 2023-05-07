@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'movie.dart';
+import 'data/models/movie/movie.dart';
 
 class Movies with ChangeNotifier {
   List<Movie> _movies = [];

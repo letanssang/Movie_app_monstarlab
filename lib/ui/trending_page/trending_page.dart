@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/widgets/trending_item.dart';
+import 'package:movie_app/ui/widgets/trending_item.dart';
 import 'package:provider/provider.dart';
 
-import '../models/movies.dart';
+import '../services/movies.dart';
 
 class TrendingScreen extends StatefulWidget {
   static const routeName = '/trending';
@@ -71,7 +71,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFF716850),
+        backgroundColor: const Color(0xFF716850),
         title: const Text('Trending', style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),),
         leading: IconButton(
           onPressed: () {
@@ -83,7 +83,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
       body: Stack(
         children: [
           Container(
-            color: Color(0xFF716850),
+            color: const Color(0xFF716850),
             padding: EdgeInsets.only(bottom: isLoading ? 25 : 0),
             child: Consumer<Movies>(
               builder: (context,movies, _){
@@ -108,7 +108,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
               },
             ),
           ),
-          isLoading ? Align(
+          isLoading ? const Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
               height: 20,
@@ -129,11 +129,11 @@ class _TrendingScreenState extends State<TrendingScreen> {
             margin: EdgeInsets.only(top: totalHeight),
             width: 40,
             decoration: BoxDecoration(
-              color: Color(0xFFD9D9D9),
+              color: const Color(0xFFD9D9D9),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Row(
-              children: [
+              children: const [
                 Icon(Icons.arrow_circle_up),
                 Text('TOP', style: TextStyle(fontSize: 8, color: Colors.black, fontWeight: FontWeight.bold)),
               ],

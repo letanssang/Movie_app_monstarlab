@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:movie_app/widgets/movie_rating.dart';
+
+import 'movie_rating.dart';
 class TrendingItem extends StatefulWidget {
   final int id;
   final String title;
@@ -25,6 +26,21 @@ class TrendingItem extends StatefulWidget {
 
 class _TrendingItemState extends State<TrendingItem> {
   bool isFavorite = false;
+  double ratingPoint() {
+    if(widget.voteAverage <= 1){
+      return 0;
+    }else if(widget.voteAverage <= 3) {
+      return 1;
+    }else if(widget.voteAverage <= 5) {
+      return 2;
+    }else if(widget.voteAverage <= 7) {
+      return 3;
+    }else if(widget.voteAverage <= 9) {
+      return 4;
+  }else {
+      return 5;
+    }
+  }
   String formatString(int num) {
     String str = num.toString();
     if (str.length < 4) {
