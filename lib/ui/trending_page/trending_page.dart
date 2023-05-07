@@ -1,52 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/ui/trending_page/components/trending_item.dart';
+import 'package:movie_app/ui/trending_page/view_model/trending_state.dart';
 import 'package:movie_app/ui/trending_page/view_model/trending_view_model.dart';
 
+import '../../data/models/movie/movie.dart';
 import '../../services/movies.dart';
-class TrendingPage extends ConsumerWidget {
+class TrendingPage extends ConsumerStatefulWidget {
   static const routeName = '/trending';
-  TrendingPage({super.key});
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _scrollController.addListener(() {
-  //     if (_scrollController.position.pixels >
-  //         _scrollController.position.minScrollExtent + 5) {
-  //       setState(() {
-  //         isOnTop = false;
-  //       });
-  //     }
-  //     if (_scrollController.offset >= _scrollController.position.maxScrollExtent) {
-  //       setState(() {
-  //         isLoading = true;
-  //       });
-  //       _loadMoreMovies(context);
-  //     }
-  //   });
-  // }
-  // Future<void> _refreshMovies(BuildContext context) async {
-  //   return Future.delayed(
-  //     const Duration(seconds: 2),
-  //   );
-  // }
-  // Future<void> _loadMoreMovies(BuildContext context) async {
-  //   await Future.delayed(
-  //     const Duration(seconds: 2),
-  //   );
-  //   setState(() {
-  //     if(_listSize < Provider.of<Movies>(context, listen: false).movies.length - 5){
-  //       _listSize += 5;
-  //     }
-  //     isLoading = false;
-  //   });
-  // }
 
-
+  const TrendingPage({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final trendingWeek = ref.watch(moviesProvider).trendingWeek;
-    final state = ref.watch(trendingProvider);
+  ConsumerState<TrendingPage> createState() => _RiverpodExampleState();
+}
+class _RiverpodExampleState extends ConsumerState<TrendingPage> {
+  late TrendingState state;
+  late TrendingViewModel viewModel;
+  late List<Movie> trendingWeek;
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    trendingWeek = ref.watch(moviesProvider).trendingWeek;
+    state = ref.watch(trendingProvider);
+    viewModel = ref.watch(trendingProvider.notifier);
+    final scrollController = state.scrollController;
+    scrollController.addListener(() {
+      if (scrollController.position.pixels < 50) {
+        viewModel.updateIsOnTop(true);
+      } else {
+        viewModel.updateIsOnTop(false);
+      }
+      if (scrollController.offset >= scrollController.position.maxScrollExtent) {
+        viewModel.updateIsLoading(true);
+        viewModel.loadMoreMovies(context, trendingWeek.length);
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     final double appBarHeight = AppBar().preferredSize.height;
     final double totalHeight = statusBarHeight + appBarHeight + 5;
@@ -69,7 +61,7 @@ class TrendingPage extends ConsumerWidget {
             padding: EdgeInsets.only(bottom: state.isLoading ? 25 : 0),
             child: ListView.builder(
                       controller: state.scrollController,
-                      itemCount: state.listSize,
+                      itemCount: ref.watch(trendingProvider).listSize,
                       itemBuilder: (context, item){
                         return TrendingItem(
                           id: trendingWeek[item].id!,
@@ -81,20 +73,19 @@ class TrendingPage extends ConsumerWidget {
                         );
                       }),
             ),
-          state.isLoading ? const Align(
+          ref.watch(trendingProvider).isLoading ? const Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
               height: 20,
               width: 20,
               child: CircularProgressIndicator(
                 color: Colors.grey,
-
               ),
             ),
           ) : Container(),
         ],
       ),
-      floatingActionButton: state.isOnTop ? null : Align(
+      floatingActionButton: ref.watch(trendingProvider).isOnTop ? null : Align(
         alignment: Alignment.topCenter,
         child: InkWell(
           onTap: ref.read(trendingProvider.notifier).scrollToTop,

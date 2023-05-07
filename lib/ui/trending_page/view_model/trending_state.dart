@@ -4,7 +4,7 @@ part 'trending_state.freezed.dart';
 @freezed
 class TrendingState with _$TrendingState {
   const factory TrendingState ({
-    @Default(false) bool isOnTop,
+    @Default(true) bool isOnTop,
     @Default(false) bool isLoading,
     required final ScrollController scrollController,
     @Default(5) int listSize,

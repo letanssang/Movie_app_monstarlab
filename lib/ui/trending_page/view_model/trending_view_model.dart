@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/ui/trending_page/view_model/trending_state.dart';
@@ -13,6 +15,7 @@ class TrendingViewModel extends StateNotifier<TrendingState> {
         curve: Curves.easeOut,
       ).then((value) => updateIsOnTop(true));
     }
+
   }
   void initScrollController(ScrollController scrollController) {
     state = state.copyWith(scrollController: scrollController);
@@ -29,4 +32,20 @@ class TrendingViewModel extends StateNotifier<TrendingState> {
   void updateListSize(int listSize) {
     state = state.copyWith(listSize: listSize);
   }
+Future<void> loadMoreMovies(BuildContext context, int maxSize) async {
+  await Future.delayed(
+    const Duration(seconds: 2),
+  );
+  if(state.listSize < maxSize - 5){
+    updateListSize(state.listSize + 5);
+  }else if(state.listSize > maxSize - 5){
+    updateListSize(maxSize);
+  }
+  updateIsLoading(false);
+}
+// Future<void> _refreshMovies(BuildContext context) async {
+//   return Future.delayed(
+//     const Duration(seconds: 2),
+//   );
+// }
 }
