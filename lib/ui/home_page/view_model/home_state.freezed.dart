@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_tab_state.dart';
+part of 'home_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,28 +15,27 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$HomeTabState {
+mixin _$HomeState {
   PageController get pageController => throw _privateConstructorUsedError;
   double get currentPage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $HomeTabStateCopyWith<HomeTabState> get copyWith =>
+  $HomeStateCopyWith<HomeState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HomeTabStateCopyWith<$Res> {
-  factory $HomeTabStateCopyWith(
-          HomeTabState value, $Res Function(HomeTabState) then) =
-      _$HomeTabStateCopyWithImpl<$Res, HomeTabState>;
+abstract class $HomeStateCopyWith<$Res> {
+  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
+      _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call({PageController pageController, double currentPage});
 }
 
 /// @nodoc
-class _$HomeTabStateCopyWithImpl<$Res, $Val extends HomeTabState>
-    implements $HomeTabStateCopyWith<$Res> {
-  _$HomeTabStateCopyWithImpl(this._value, this._then);
+class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
+    implements $HomeStateCopyWith<$Res> {
+  _$HomeStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,22 +62,21 @@ class _$HomeTabStateCopyWithImpl<$Res, $Val extends HomeTabState>
 }
 
 /// @nodoc
-abstract class _$$_HomeTabStateCopyWith<$Res>
-    implements $HomeTabStateCopyWith<$Res> {
-  factory _$$_HomeTabStateCopyWith(
-          _$_HomeTabState value, $Res Function(_$_HomeTabState) then) =
-      __$$_HomeTabStateCopyWithImpl<$Res>;
+abstract class _$$_HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
+  factory _$$_HomeStateCopyWith(
+          _$_HomeState value, $Res Function(_$_HomeState) then) =
+      __$$_HomeStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({PageController pageController, double currentPage});
 }
 
 /// @nodoc
-class __$$_HomeTabStateCopyWithImpl<$Res>
-    extends _$HomeTabStateCopyWithImpl<$Res, _$_HomeTabState>
-    implements _$$_HomeTabStateCopyWith<$Res> {
-  __$$_HomeTabStateCopyWithImpl(
-      _$_HomeTabState _value, $Res Function(_$_HomeTabState) _then)
+class __$$_HomeStateCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$_HomeState>
+    implements _$$_HomeStateCopyWith<$Res> {
+  __$$_HomeStateCopyWithImpl(
+      _$_HomeState _value, $Res Function(_$_HomeState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +85,7 @@ class __$$_HomeTabStateCopyWithImpl<$Res>
     Object? pageController = null,
     Object? currentPage = null,
   }) {
-    return _then(_$_HomeTabState(
+    return _then(_$_HomeState(
       pageController: null == pageController
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
@@ -102,9 +100,8 @@ class __$$_HomeTabStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_HomeTabState implements _HomeTabState {
-  const _$_HomeTabState(
-      {required this.pageController, required this.currentPage});
+class _$_HomeState implements _HomeState {
+  const _$_HomeState({required this.pageController, required this.currentPage});
 
   @override
   final PageController pageController;
@@ -113,14 +110,14 @@ class _$_HomeTabState implements _HomeTabState {
 
   @override
   String toString() {
-    return 'HomeTabState(pageController: $pageController, currentPage: $currentPage)';
+    return 'HomeState(pageController: $pageController, currentPage: $currentPage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HomeTabState &&
+            other is _$_HomeState &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
             (identical(other.currentPage, currentPage) ||
@@ -133,14 +130,14 @@ class _$_HomeTabState implements _HomeTabState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HomeTabStateCopyWith<_$_HomeTabState> get copyWith =>
-      __$$_HomeTabStateCopyWithImpl<_$_HomeTabState>(this, _$identity);
+  _$$_HomeStateCopyWith<_$_HomeState> get copyWith =>
+      __$$_HomeStateCopyWithImpl<_$_HomeState>(this, _$identity);
 }
 
-abstract class _HomeTabState implements HomeTabState {
-  const factory _HomeTabState(
+abstract class _HomeState implements HomeState {
+  const factory _HomeState(
       {required final PageController pageController,
-      required final double currentPage}) = _$_HomeTabState;
+      required final double currentPage}) = _$_HomeState;
 
   @override
   PageController get pageController;
@@ -148,6 +145,6 @@ abstract class _HomeTabState implements HomeTabState {
   double get currentPage;
   @override
   @JsonKey(ignore: true)
-  _$$_HomeTabStateCopyWith<_$_HomeTabState> get copyWith =>
+  _$$_HomeStateCopyWith<_$_HomeState> get copyWith =>
       throw _privateConstructorUsedError;
 }

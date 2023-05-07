@@ -4,9 +4,9 @@ import 'package:movie_app/ui/trending_page/components/trending_item.dart';
 import 'package:movie_app/ui/trending_page/view_model/trending_view_model.dart';
 
 import '../../services/movies.dart';
-class TrendingScreen extends ConsumerWidget {
+class TrendingPage extends ConsumerWidget {
   static const routeName = '/trending';
-  TrendingScreen({super.key});
+  TrendingPage({super.key});
   // @override
   // void initState() {
   //   super.initState();
@@ -45,7 +45,7 @@ class TrendingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movies = ref.watch(moviesProvider);
+    final trendingWeek = ref.watch(moviesProvider).trendingWeek;
     final state = ref.watch(trendingProvider);
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     final double appBarHeight = AppBar().preferredSize.height;
@@ -72,12 +72,12 @@ class TrendingScreen extends ConsumerWidget {
                       itemCount: state.listSize,
                       itemBuilder: (context, item){
                         return TrendingItem(
-                          id: movies[item].id!,
-                          title: movies[item].title!,
-                          posterPath: movies[item].posterPath!,
-                          overview: movies[item].overview!,
-                          voteCount: movies[item].voteCount!,
-                          voteAverage: movies[item].voteAverage!,
+                          id: trendingWeek[item].id!,
+                          title: trendingWeek[item].title!,
+                          posterPath: trendingWeek[item].posterPath!,
+                          overview: trendingWeek[item].overview!,
+                          voteCount: trendingWeek[item].voteCount!,
+                          voteAverage: trendingWeek[item].voteAverage!,
                         );
                       }),
             ),

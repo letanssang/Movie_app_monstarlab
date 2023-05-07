@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'home_tab_state.freezed.dart';
+part 'home_state.freezed.dart';
 @freezed
-class HomeTabState with _$HomeTabState {
-  const factory HomeTabState({
+class HomeState with _$HomeState {
+  const factory HomeState({
     required final PageController pageController,
     required double currentPage,
-  }) = _HomeTabState;
+  }) = _HomeState;
 }
