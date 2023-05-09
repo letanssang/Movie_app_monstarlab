@@ -1,8 +1,7 @@
-import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/services.dart';
 import 'package:dio/dio.dart';
+import '../data/models/genre/genre.dart';
 import '../data/models/movie/movie.dart';
 import 'movies_state.dart';
 final moviesProvider = StateNotifierProvider<MoviesViewModel, MoviesState>((ref) {
@@ -28,6 +27,7 @@ class MoviesViewModel extends StateNotifier<MoviesState> {
     const apiKey = '7ff74d3989927d3ca53bdc4d16facfe9';
     const endpointWeek = '/trending/movie/week';
     const endpointDay = '/trending/movie/day';
+    const endpointGenre = '/genre/movie/list';
     const page = 1;
     final dio = Dio();
     final responseWeek = await dio.get(
@@ -42,21 +42,38 @@ class MoviesViewModel extends StateNotifier<MoviesState> {
       'page': page.toString(),
     }
     );
+    final responseGenre = await dio.get(
+        '$baseUrl$endpointGenre',queryParameters: {
+      'api_key': apiKey,
+    }
+    );
     if (responseWeek.statusCode == 200 && responseDay.statusCode == 200) {
       final List<dynamic> dataWeek = responseWeek.data['results'];
       final List<dynamic> dataDay = responseDay.data['results'];
-      print(dataWeek);
-      print(dataDay);
+      final List<dynamic> dataGenre = responseGenre.data['genres'];
       state = state.copyWith(
           trendingWeek: dataWeek.map((e) => Movie.fromJson(e)).toList(),
-          trendingDay: dataDay.map((e) => Movie.fromJson(e)).toList()
+          trendingDay: dataDay.map((e) => Movie.fromJson(e)).toList(),
+          genres: dataGenre.map((e) => Genre.fromJson(e)).toList()
       );
     } else {
       throw Exception('Failed to fetch movies');
     }
   }
 
+  void toggleFavorite(int id) {
+    List<int> updatedFavorites = List.from(state.favoriteMovies);
 
+    if (isFavorite(id)) {
+      updatedFavorites.remove(id);
+    } else {
+      updatedFavorites.add(id);
+    }
+    state = state.copyWith(favoriteMovies: updatedFavorites);
+  }
+  bool isFavorite(int id) {
+    return state.favoriteMovies.contains(id);
+  }
   Movie findById(int id) {
     return state.trendingWeek.firstWhere((element) => element.id == id);
   }

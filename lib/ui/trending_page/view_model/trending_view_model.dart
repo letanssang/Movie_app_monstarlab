@@ -4,9 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/ui/trending_page/view_model/trending_state.dart';
 
-final trendingProvider = StateNotifierProvider<TrendingViewModel, TrendingState>((ref) => TrendingViewModel());
+import '../../../services/movies.dart';
+
+final trendingProvider = StateNotifierProvider<TrendingViewModel, TrendingState>((ref) => TrendingViewModel(ref));
 class TrendingViewModel extends StateNotifier<TrendingState> {
-  TrendingViewModel() : super(TrendingState(scrollController: ScrollController()));
+  Ref ref;
+  TrendingViewModel(this.ref) : super(TrendingState(scrollController: ScrollController()));
   void scrollToTop() {
     if (state.scrollController.offset > 0) {
       state.scrollController.animateTo(
@@ -43,9 +46,12 @@ Future<void> loadMoreMovies(BuildContext context, int maxSize) async {
   }
   updateIsLoading(false);
 }
-// Future<void> _refreshMovies(BuildContext context) async {
-//   return Future.delayed(
-//     const Duration(seconds: 2),
-//   );
-// }
+Future<void> refreshMovies(BuildContext context) async {
+  return Future.delayed(
+    const Duration(seconds: 2),
+      ref.read(moviesProvider.notifier).fetchMovies);
+}
+void onTapFavorite(int id){
+  ref.watch(moviesProvider.notifier).toggleFavorite(id);
+}
 }

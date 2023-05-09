@@ -1,25 +1,36 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-part 'movie.freezed.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 part 'movie.g.dart';
 
-@freezed
-class Movie with _$Movie{
+@JsonSerializable()
+class Movie {
+  final int? id;
+  final String? title;
+  @JsonKey(name: 'poster_path')
+  final String? posterPath;
+  @JsonKey(name: 'backdrop_path')
+  final String? backdropPath;
+  final String? overview;
+  @JsonKey(name: 'release_date')
+  final String? releaseDate;
+  @JsonKey(name: 'vote_average')
+  final double? voteAverage;
+  @JsonKey(name: 'vote_count')
+  final int? voteCount;
+  @JsonKey(name: 'genre_ids')
+  final List<int>? genreIds;
 
-  const factory Movie(
-      { bool? adult,
-        @JsonKey(name: 'backdrop_path') String? backdropPath,
-        @JsonKey(name: 'overview') String? overview,
-        @JsonKey(name: 'genre_ids')List<int>? genreIds,
-        @JsonKey(name: 'original_language') String? originalLanguage,
-        @JsonKey(name: 'original_title')String? originalTitle,
-        @JsonKey(name: 'id') int? id,
-        @JsonKey(name: 'video') bool? video,
-        @JsonKey(name: 'vote_average') double? voteAverage,
-        @JsonKey(name: 'title') String? title,
-        @JsonKey(name: 'vote_count') int? voteCount,
-        @JsonKey(name: 'release_date') String? releaseDate,
-        @JsonKey(name: 'poster_path')String? posterPath,
-        @JsonKey(name: 'popularity') double? popularity,
-        @JsonKey(name: 'media_type') String? mediaType}) = _Movie;
+  const Movie({
+    this.id = 0,
+    this.title = '',
+    this.posterPath = '',
+    this.backdropPath = '',
+    this.overview =  '',
+    this.releaseDate = '',
+    this.voteAverage = 0.0,
+    this.voteCount = 0,
+    this.genreIds =   const [],
+  });
+
   factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
 }

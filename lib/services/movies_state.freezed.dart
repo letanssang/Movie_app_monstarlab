@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MoviesState {
   List<Movie> get trendingWeek => throw _privateConstructorUsedError;
   List<Movie> get trendingDay => throw _privateConstructorUsedError;
+  List<Genre> get genres => throw _privateConstructorUsedError;
+  List<int> get favoriteMovies => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MoviesStateCopyWith<MoviesState> get copyWith =>
@@ -30,7 +32,11 @@ abstract class $MoviesStateCopyWith<$Res> {
           MoviesState value, $Res Function(MoviesState) then) =
       _$MoviesStateCopyWithImpl<$Res, MoviesState>;
   @useResult
-  $Res call({List<Movie> trendingWeek, List<Movie> trendingDay});
+  $Res call(
+      {List<Movie> trendingWeek,
+      List<Movie> trendingDay,
+      List<Genre> genres,
+      List<int> favoriteMovies});
 }
 
 /// @nodoc
@@ -48,6 +54,8 @@ class _$MoviesStateCopyWithImpl<$Res, $Val extends MoviesState>
   $Res call({
     Object? trendingWeek = null,
     Object? trendingDay = null,
+    Object? genres = null,
+    Object? favoriteMovies = null,
   }) {
     return _then(_value.copyWith(
       trendingWeek: null == trendingWeek
@@ -58,6 +66,14 @@ class _$MoviesStateCopyWithImpl<$Res, $Val extends MoviesState>
           ? _value.trendingDay
           : trendingDay // ignore: cast_nullable_to_non_nullable
               as List<Movie>,
+      genres: null == genres
+          ? _value.genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<Genre>,
+      favoriteMovies: null == favoriteMovies
+          ? _value.favoriteMovies
+          : favoriteMovies // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -70,7 +86,11 @@ abstract class _$$_MoviesStateCopyWith<$Res>
       __$$_MoviesStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Movie> trendingWeek, List<Movie> trendingDay});
+  $Res call(
+      {List<Movie> trendingWeek,
+      List<Movie> trendingDay,
+      List<Genre> genres,
+      List<int> favoriteMovies});
 }
 
 /// @nodoc
@@ -86,6 +106,8 @@ class __$$_MoviesStateCopyWithImpl<$Res>
   $Res call({
     Object? trendingWeek = null,
     Object? trendingDay = null,
+    Object? genres = null,
+    Object? favoriteMovies = null,
   }) {
     return _then(_$_MoviesState(
       trendingWeek: null == trendingWeek
@@ -96,6 +118,14 @@ class __$$_MoviesStateCopyWithImpl<$Res>
           ? _value._trendingDay
           : trendingDay // ignore: cast_nullable_to_non_nullable
               as List<Movie>,
+      genres: null == genres
+          ? _value._genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<Genre>,
+      favoriteMovies: null == favoriteMovies
+          ? _value._favoriteMovies
+          : favoriteMovies // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -105,9 +135,13 @@ class __$$_MoviesStateCopyWithImpl<$Res>
 class _$_MoviesState implements _MoviesState {
   const _$_MoviesState(
       {final List<Movie> trendingWeek = const [],
-      final List<Movie> trendingDay = const []})
+      final List<Movie> trendingDay = const [],
+      final List<Genre> genres = const [],
+      final List<int> favoriteMovies = const []})
       : _trendingWeek = trendingWeek,
-        _trendingDay = trendingDay;
+        _trendingDay = trendingDay,
+        _genres = genres,
+        _favoriteMovies = favoriteMovies;
 
   final List<Movie> _trendingWeek;
   @override
@@ -127,9 +161,27 @@ class _$_MoviesState implements _MoviesState {
     return EqualUnmodifiableListView(_trendingDay);
   }
 
+  final List<Genre> _genres;
+  @override
+  @JsonKey()
+  List<Genre> get genres {
+    if (_genres is EqualUnmodifiableListView) return _genres;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_genres);
+  }
+
+  final List<int> _favoriteMovies;
+  @override
+  @JsonKey()
+  List<int> get favoriteMovies {
+    if (_favoriteMovies is EqualUnmodifiableListView) return _favoriteMovies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_favoriteMovies);
+  }
+
   @override
   String toString() {
-    return 'MoviesState(trendingWeek: $trendingWeek, trendingDay: $trendingDay)';
+    return 'MoviesState(trendingWeek: $trendingWeek, trendingDay: $trendingDay, genres: $genres, favoriteMovies: $favoriteMovies)';
   }
 
   @override
@@ -140,14 +192,19 @@ class _$_MoviesState implements _MoviesState {
             const DeepCollectionEquality()
                 .equals(other._trendingWeek, _trendingWeek) &&
             const DeepCollectionEquality()
-                .equals(other._trendingDay, _trendingDay));
+                .equals(other._trendingDay, _trendingDay) &&
+            const DeepCollectionEquality().equals(other._genres, _genres) &&
+            const DeepCollectionEquality()
+                .equals(other._favoriteMovies, _favoriteMovies));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_trendingWeek),
-      const DeepCollectionEquality().hash(_trendingDay));
+      const DeepCollectionEquality().hash(_trendingDay),
+      const DeepCollectionEquality().hash(_genres),
+      const DeepCollectionEquality().hash(_favoriteMovies));
 
   @JsonKey(ignore: true)
   @override
@@ -159,12 +216,18 @@ class _$_MoviesState implements _MoviesState {
 abstract class _MoviesState implements MoviesState {
   const factory _MoviesState(
       {final List<Movie> trendingWeek,
-      final List<Movie> trendingDay}) = _$_MoviesState;
+      final List<Movie> trendingDay,
+      final List<Genre> genres,
+      final List<int> favoriteMovies}) = _$_MoviesState;
 
   @override
   List<Movie> get trendingWeek;
   @override
   List<Movie> get trendingDay;
+  @override
+  List<Genre> get genres;
+  @override
+  List<int> get favoriteMovies;
   @override
   @JsonKey(ignore: true)
   _$$_MoviesStateCopyWith<_$_MoviesState> get copyWith =>
