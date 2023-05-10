@@ -38,7 +38,7 @@ class _MovieDetailPageState extends ConsumerState<MovieDetailPage> {
           color: Color(0xFF716850),
         ),
         child: state.fetchState != FetchState.success
-            ? Center(child: const CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,7 +90,7 @@ class _MovieDetailPageState extends ConsumerState<MovieDetailPage> {
                                           size: 16,
                                           color: state.isFavorite
                                               ? const Color(0xFFBB7152)
-                                              : Color(0xFFC1AEA6),
+                                              : const Color(0xFFC1AEA6),
                                         )),
                                     Text(
                                      state.isFavorite ?
@@ -103,13 +103,13 @@ class _MovieDetailPageState extends ConsumerState<MovieDetailPage> {
                                   ],
                                 ),
                                 Expanded(
-                                  child: Text(
-                                    state.movie.overview!,
-                                    maxLines: 10,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
+                                  child: SingleChildScrollView(
+                                    child: Text(
+                                      state.movie.overview!,
+                                      style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 )
                               ],
@@ -159,6 +159,11 @@ class _MovieDetailPageState extends ConsumerState<MovieDetailPage> {
                         ? const Center(child: Text('No similar movies'))
                         : CollectionGridView(
                             movies: state.similarMovies,
+                      onTap: (int id) {
+                              ref
+                                  .read(movieDetailProvider.notifier)
+                                  .initMovie(id);
+                      },
                           ),
                   ),
                 ],

@@ -4,7 +4,8 @@ import '../../../data/models/movie/movie.dart';
 
 class CollectionGridView extends StatelessWidget {
   final List<Movie> movies;
-  const CollectionGridView({required this.movies, Key? key}) : super(key: key);
+  final Function onTap;
+  const CollectionGridView({required this.movies, required this.onTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +20,22 @@ class CollectionGridView extends StatelessWidget {
             childAspectRatio: 0.625,
           ),
           itemBuilder: (context, item) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/detail',
-                    arguments: movies[item].id);
+            return InkWell(
+              onTap: (){
+                onTap(movies[item].id);
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   'https://image.tmdb.org/t/p/w500${movies[item].posterPath}',
+                  errorBuilder: (context,error, stackTrace ){
+                    return Image.network(
+                      'https://image.tmdb.org/t/p/w500${movies[item].backdropPath}',
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                    );
+                  },
                   fit: BoxFit.cover,
                 ),
               ),

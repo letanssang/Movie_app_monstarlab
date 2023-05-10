@@ -13,6 +13,14 @@ class BannerImage extends StatelessWidget {
       children: [
         Image.network(
           'https://image.tmdb.org/t/p/w500$backdropPath',
+          errorBuilder: (context, error, stackTrace) {
+            return Image.network(
+              'https://image.tmdb.org/t/p/w500$posterPath',
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.5,
+            );
+          },
           fit: BoxFit.cover,
           width: MediaQuery
               .of(context)
@@ -53,6 +61,14 @@ class BannerImage extends StatelessWidget {
               child: Image.network(
                 'https://image.tmdb.org/t/p/w500$posterPath',
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.network(
+                    'https://image.tmdb.org/t/p/w500$backdropPath',
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                  );
+                }
               ),
             ),
           ),

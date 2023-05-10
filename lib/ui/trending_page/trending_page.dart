@@ -6,6 +6,7 @@ import 'package:movie_app/ui/trending_page/view_model/trending_view_model.dart';
 
 import '../../data/models/movie/movie.dart';
 import '../../services/movies.dart';
+import '../fetch_state.dart';
 
 class TrendingPage extends ConsumerStatefulWidget {
   static const routeName = '/trending';
@@ -19,13 +20,22 @@ class TrendingPage extends ConsumerStatefulWidget {
 class _TrendingPageState extends ConsumerState<TrendingPage> {
   late TrendingState state;
   late TrendingViewModel viewModel;
-  late List<Movie> trendingWeek;
+  late List<Movie> trending;
+  late final TrendingType trendingType;
+  String title = 'Trending';
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    trendingWeek = ref.watch(moviesProvider).trendingWeek;
+    trendingType = ModalRoute.of(context)!.settings.arguments as TrendingType;
+    if (trendingType == TrendingType.week) {
+      trending = ref.watch(moviesProvider).trendingWeek;
+      title = 'Trending of Week';
+    } else {
+      trending = ref.watch(moviesProvider).trendingDay;
+      title = 'List of Day';
+    }
     state = ref.watch(trendingProvider);
     viewModel = ref.watch(trendingProvider.notifier);
     final scrollController = state.scrollController;
@@ -38,14 +48,23 @@ class _TrendingPageState extends ConsumerState<TrendingPage> {
       if (scrollController.offset >=
           scrollController.position.maxScrollExtent) {
         viewModel.updateIsLoading(true);
-        viewModel.loadMoreMovies(context, trendingWeek.length);
+        viewModel.loadMoreMovies(context, trending.length);
       }
     });
   }
-
+  @override
+  void dispose() {
+    state.scrollController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    trendingWeek = ref.watch(moviesProvider).trendingWeek;
+    if(trendingType == TrendingType.week){
+      trending = ref.watch(moviesProvider).trendingWeek;
+    } else {
+      trending = ref.watch(moviesProvider).trendingDay;
+    }
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     final double appBarHeight = AppBar().preferredSize.height;
     final double totalHeight = statusBarHeight + appBarHeight + 5;
@@ -57,8 +76,8 @@ class _TrendingPageState extends ConsumerState<TrendingPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color(0xFF716850),
-        title: const Text(
-          'Trending',
+        title: Text(
+          title,
           style: TextStyle(
               color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
         ),
@@ -83,19 +102,19 @@ class _TrendingPageState extends ConsumerState<TrendingPage> {
                   itemCount: ref.watch(trendingProvider).listSize,
                   itemBuilder: (context, index) {
                     return TrendingItem(
-                        id: trendingWeek[index].id!,
-                        title: trendingWeek[index].title!,
-                        posterPath: trendingWeek[index].posterPath!,
-                        overview: trendingWeek[index].overview!,
-                        voteCount: isFavorite(trendingWeek[index].id!)
-                            ? trendingWeek[index].voteCount! + 1
-                            : trendingWeek[index].voteCount!,
-                        voteAverage: trendingWeek[index].voteAverage!,
-                        isFavorite: isFavorite(trendingWeek[index].id!),
+                        id: trending[index].id!,
+                        title: trending[index].title!,
+                        posterPath: trending[index].posterPath!,
+                        overview: trending[index].overview!,
+                        voteCount: isFavorite(trending[index].id!)
+                            ? trending[index].voteCount! + 1
+                            : trending[index].voteCount!,
+                        voteAverage: trending[index].voteAverage!,
+                        isFavorite: isFavorite(trending[index].id!),
                         onPressed: () {
                           ref
-                              .watch(trendingProvider.notifier)
-                              .onTapFavorite(trendingWeek[index].id!);
+                              .read(trendingProvider.notifier)
+                              .onTapFavorite(trending[index].id!);
                         });
                   }),
             ),

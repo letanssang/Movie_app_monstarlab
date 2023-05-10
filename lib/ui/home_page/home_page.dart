@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:movie_app/ui/fetch_state.dart';
 import 'package:movie_app/ui/home_page/view_model/home_view_model.dart';
 
 import '../../services/movies.dart';
@@ -8,17 +9,6 @@ import '../trending_page/trending_page.dart';
 
 class HomePage extends ConsumerWidget {
   HomePage({Key? key});
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   _pageController.addListener(() {
-  //     setState(() {
-  //       _currentPage = _pageController.page!;
-  //     });
-  //   });
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +25,7 @@ class HomePage extends ConsumerWidget {
         backgroundColor: const Color(0xFF716850),
         title: TextButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(TrendingPage.routeName);
+              Navigator.of(context).pushNamed(TrendingPage.routeName, arguments: TrendingType.week);
             },
             child: const Text('Trending',
                 style: TextStyle(
@@ -44,7 +34,9 @@ class HomePage extends ConsumerWidget {
                     fontWeight: FontWeight.bold))),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/search');
+            },
             icon: const Icon(Icons.search, color: Colors.black, size: 25),
           ),
         ],
@@ -134,11 +126,16 @@ class HomePage extends ConsumerWidget {
                 position: state.currentPage,
                 dotsCount: 6),
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 16, bottom: 9),
-            child: Text('List of Day',
-                style:
-                TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, bottom: 9),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(TrendingPage.routeName, arguments: TrendingType.day);
+              },
+              child: const Text('List of Day',
+                  style:
+                  TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            ),
           ),
           Flexible(
             flex: 1,
@@ -147,7 +144,7 @@ class HomePage extends ConsumerWidget {
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: trendingDay.length,
+                itemCount: 10,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed('/detail',

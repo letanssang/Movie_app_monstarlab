@@ -26,9 +26,11 @@ class GenreGridView extends StatelessWidget {
           child: Center(
             child: Text(
               strings[index],
-              maxLines: 1,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 14.0,
+                fontSize: 10.0,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

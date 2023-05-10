@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/ui/movie_detail_page/movie_detail_page.dart';
+import 'package:movie_app/ui/search_page/search_page.dart';
 import 'package:movie_app/ui/trending_page/trending_page.dart';
 
 import 'ui/home_page/home_page.dart';
@@ -29,8 +30,9 @@ class MyApp extends StatelessWidget {
         title: 'My Movies App',
         home: HomePage(),
         routes: {
-          TrendingPage.routeName: (context) => TrendingPage(),
+          TrendingPage.routeName: (context) => const TrendingPage(),
           MovieDetailPage.routeName: (context) => const MovieDetailPage(),
+          SearchPage.routeName: (context) => const SearchPage(),
         },
     );
   }

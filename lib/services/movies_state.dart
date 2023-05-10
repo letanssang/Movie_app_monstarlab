@@ -10,7 +10,6 @@ class MoviesState with _$MoviesState {
   const factory MoviesState({
     @Default([]) List<Movie> trendingWeek,
     @Default([]) List<Movie> trendingDay,
-    @Default([]) List<Genre> genres,
     @Default([]) List<int> favoriteMovies,
   }) = _MoviesState;
 }

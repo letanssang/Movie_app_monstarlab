@@ -11,6 +11,7 @@ class TrendingItem extends StatelessWidget {
   final double voteAverage;
   final bool isFavorite;
   final Function()? onPressed;
+  final bool isSearching;
 
   const TrendingItem({required this.id,
     this.title = 'Default Title',
@@ -20,6 +21,7 @@ class TrendingItem extends StatelessWidget {
     this.voteAverage = 0.0,
     this.isFavorite = false,
     this.onPressed,
+    this.isSearching = false,
     Key? key})
       : super(key: key);
 
@@ -114,7 +116,7 @@ class TrendingItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
+              if(!isSearching) Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(onPressed: onPressed, icon: Icon(Icons.favorite, size: 16,

@@ -6,7 +6,7 @@ import 'package:movie_app/ui/trending_page/view_model/trending_state.dart';
 
 import '../../../services/movies.dart';
 
-final trendingProvider = StateNotifierProvider<TrendingViewModel, TrendingState>((ref) => TrendingViewModel(ref));
+final trendingProvider = StateNotifierProvider.autoDispose<TrendingViewModel, TrendingState>((ref) => TrendingViewModel(ref));
 class TrendingViewModel extends StateNotifier<TrendingState> {
   Ref ref;
   TrendingViewModel(this.ref) : super(TrendingState(scrollController: ScrollController()));

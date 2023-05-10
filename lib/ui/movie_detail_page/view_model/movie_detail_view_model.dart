@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/services/movies.dart';
 import 'package:movie_app/ui/movie_detail_page/view_model/movie_detail_state.dart';
 
-import '../../../data/models/genre/genre.dart';
 import '../../../data/models/movie/movie.dart';
 import '../../fetch_state.dart';
 
