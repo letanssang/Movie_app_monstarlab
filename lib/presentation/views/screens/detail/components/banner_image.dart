@@ -12,6 +12,8 @@ class BannerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Image.network(
@@ -20,13 +22,13 @@ class BannerImage extends StatelessWidget {
             return Image.network(
               'https://image.tmdb.org/t/p/w500$posterPath',
               fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
+              width: screenWidth,
+              height: height * 0.5,
             );
           },
           fit: BoxFit.cover,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.5,
+          width: screenWidth,
+          height: height * 0.5,
         ),
         Container(
           decoration: const BoxDecoration(
@@ -44,8 +46,8 @@ class BannerImage extends StatelessWidget {
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.3,
-            height: MediaQuery.of(context).size.height * 0.2,
+            width: screenWidth * 0.3,
+            height: height * 0.2,
             margin: const EdgeInsets.only(left: 10, bottom: 10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -55,8 +57,8 @@ class BannerImage extends StatelessWidget {
                 return Image.network(
                   'https://image.tmdb.org/t/p/w500$backdropPath',
                   fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: screenWidth,
+                  height: height * 0.5,
                 );
               }),
             ),

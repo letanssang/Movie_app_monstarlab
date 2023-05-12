@@ -1,39 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/remote/movie_service.dart';
+import '../../di/dependency_injection.dart';
 import '../../domain/entities/movie/movie.dart';
-import '../../domain/use_cases/get_trending_movies_weeks_use_case.dart';
+import '../../domain/use_cases/get_trending_movies_day_use_case.dart';
+import '../../domain/use_cases/get_trending_movies_week_use_case.dart';
 import 'movies_state.dart';
 
 final moviesProvider =
     StateNotifierProvider<MoviesViewModel, MoviesState>((ref) {
-  return MoviesViewModel(
-    ref.read(movieServiceProvider),
-    GetTrendingMoviesWeekUseCase(),
-  );
+  return MoviesViewModel();
 });
 
 class MoviesViewModel extends StateNotifier<MoviesState> {
-  final MovieService _movieService;
-  final GetTrendingMoviesWeekUseCase _getTrendingMoviesWeekUseCase;
-
-  MoviesViewModel(
-    this._movieService,
-    this._getTrendingMoviesWeekUseCase,
-  ) : super(const MoviesState()) {
+  MoviesViewModel() : super(const MoviesState()) {
     fetchMovies();
   }
 
   Future<void> fetchMovies() async {
-    const apiKey = '7ff74d3989927d3ca53bdc4d16facfe9';
-    const page = 1;
     try {
-      final trendingWeekResponse =
-          await _getTrendingMoviesWeekUseCase.run(_movieService, apiKey, page);
-      final trendingWeek = trendingWeekResponse.results;
-      final trendingDayResponse =
-          await _movieService.getTrendingMoviesDay(apiKey, page);
-      final trendingDay = trendingDayResponse.results;
+      final trendingWeek = await getIt<GetTrendingMoviesWeekUseCase>().run();
+      final trendingDay = await getIt<GetTrendingMoviesDayUseCase>().run();
       state = state.copyWith(
         trendingWeek: trendingWeek,
         trendingDay: trendingDay,

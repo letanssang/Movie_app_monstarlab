@@ -1,12 +1,29 @@
-import '../models/response/movie_response.dart';
+import 'package:movie_app/utils/constants/num.dart';
+import 'package:movie_app/utils/constants/string.dart';
+
+import '../../di/dependency_injection.dart';
+import '../../domain/entities/movie/movie.dart';
+import '../remote/models/response/movie_response.dart';
 import '../remote/movie_service.dart';
 
 class MovieRepository {
-  MovieRepository(this.movieService);
+  Future<MovieResponse> getTrendingMoviesWeek() async {
+    return getIt<MovieService>().getTrendingMoviesWeek(apiKey, page);
+  }
 
-  final MovieService movieService;
+  Future<MovieResponse> getTrendingMoviesDay() async {
+    return getIt<MovieService>().getTrendingMoviesDay(apiKey, page);
+  }
 
-  Future<MovieResponse> getTrendingMoviesWeek(String apiKey, int page) async {
-    return movieService.getTrendingMoviesWeek(apiKey, page);
+  Future<Movie> getMovieDetails(int id) async {
+    return getIt<MovieService>().getMovieDetails(id, apiKey);
+  }
+
+  Future<MovieResponse> getSimilarMovies(int id) async {
+    return getIt<MovieService>().getSimilarMovies(id, apiKey);
+  }
+
+  Future<MovieResponse> getSearchSuggestList(String query) async {
+    return getIt<MovieService>().getSearchSuggestList(query, apiKey, page);
   }
 }

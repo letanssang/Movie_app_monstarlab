@@ -42,6 +42,9 @@ class TrendingViewModel extends StateNotifier<TrendingState> {
     await Future.delayed(
       const Duration(seconds: 2),
     );
+    if (!mounted) {
+      return;
+    }
     if (state.listSize < maxSize - 5) {
       updateListSize(state.listSize + 5);
     } else if (state.listSize > maxSize - 5) {

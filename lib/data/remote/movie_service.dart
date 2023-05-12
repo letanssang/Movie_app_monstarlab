@@ -1,16 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_app/data/models/response/movie_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../domain/entities/movie/movie.dart';
+import 'models/response/movie_response.dart';
 
 part 'movie_service.g.dart';
-
-final movieServiceProvider = Provider<MovieService>((ref) {
-  final dio = Dio();
-  return MovieService(dio);
-});
 
 @RestApi(baseUrl: 'https://api.themoviedb.org/3')
 abstract class MovieService {
@@ -26,13 +20,13 @@ abstract class MovieService {
 
   @GET('/movie/{id}')
   Future<Movie> getMovieDetails(
-    @Path('id') int movieId,
+    @Path('id') int id,
     @Query('api_key') String apiKey,
   );
 
   @GET('/movie/{id}/similar')
   Future<MovieResponse> getSimilarMovies(
-    @Path('id') int movieId,
+    @Path('id') int id,
     @Query('api_key') String apiKey,
   );
 

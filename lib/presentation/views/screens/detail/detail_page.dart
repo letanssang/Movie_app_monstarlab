@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/domain/enums/fetch_state.dart';
 
-import '../../../../data/remote/movie_service.dart';
 import '../../resources/color.dart';
 import '../../widgets/movie_rating.dart';
 import 'components/banner_image.dart';
@@ -15,10 +14,7 @@ import 'detail_view_model.dart';
 
 final detailProvider =
     StateNotifierProvider.autoDispose<DetailViewModel, DetailState>(
-        (ref) => DetailViewModel(
-              ref,
-              movieService: ref.read(movieServiceProvider),
-            ));
+        (ref) => DetailViewModel(ref));
 
 class DetailPage extends ConsumerStatefulWidget {
   static const routeName = '/detail';
