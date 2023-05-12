@@ -10,7 +10,7 @@ Users can enter the title or keywords of a movie to search for relevant results.
 Users can click on a movie to view detailed information including the title, release date, genre, runtime, cast, director, and ratings.
 ### Popular Movies: 
 The app displays a list of popular movies, allowing users to quickly browse through trending titles.
-###Favorites: 
+### Favorites: 
 Users can mark movies as favorites and access them later for quick reference.
 ### User Ratings: 
 Users can rate movies and provide feedback on their viewing experience.
