@@ -1,0 +1,4 @@
+enum TrendingType {
+  week,
+  day,
+}
