@@ -8,8 +8,9 @@ class GetSearchSuggestListUseCase {
     final searchSuggestListResponse =
         await getIt<MovieRepository>().getSearchSuggestList(query);
     final suggestList = searchSuggestListResponse.results
-      ..where((element) =>
-          element.backdropPath != '' && element.posterPath != '').toList();
+        .where(
+            (element) => element.backdropPath != '' && element.posterPath != '')
+        .toList();
     return suggestList;
   }
 }

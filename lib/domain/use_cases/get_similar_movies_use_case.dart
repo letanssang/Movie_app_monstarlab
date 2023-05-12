@@ -8,8 +8,9 @@ class GetSimilarMoviesUseCase {
     final similarMoviesResponse =
         await getIt<MovieRepository>().getSimilarMovies(id);
     final similarMovies = similarMoviesResponse.results
-      ..where((element) =>
-          element.backdropPath != '' && element.posterPath != '').toList();
+        .where(
+            (element) => element.backdropPath != '' && element.posterPath != '')
+        .toList();
     return similarMovies;
   }
 }
