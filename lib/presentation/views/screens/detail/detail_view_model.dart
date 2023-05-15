@@ -11,8 +11,9 @@ import 'detail_state.dart';
 
 class DetailViewModel extends StateNotifier<DetailState> {
   Ref ref;
+  final GetMovieDetailsUseCase getMovieDetailsUseCase;
 
-  DetailViewModel(this.ref)
+  DetailViewModel(this.ref, this.getMovieDetailsUseCase)
       : super(DetailState(
           scrollController: ScrollController(),
         ));
@@ -20,7 +21,7 @@ class DetailViewModel extends StateNotifier<DetailState> {
   Future<void> initMovie(int id) async {
     final isFavorite = ref.read(moviesProvider.notifier).isFavorite(id);
     try {
-      final movie = await getIt<GetMovieDetailsUseCase>().run(id);
+      final movie = await getMovieDetailsUseCase.run(id);
       List<String> genres = movie.genres!.map((genre) => genre.name).toList();
       final List<Movie> similarMovies =
           await getIt<GetSimilarMoviesUseCase>().run(id);

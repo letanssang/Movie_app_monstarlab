@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:movie_app/di/dependency_injection.dart';
 import 'package:movie_app/domain/enums/fetch_state.dart';
 
+import '../../../../domain/use_cases/get_search_suggest_list_use_case.dart';
 import '../../resources/color.dart';
 import '../../widgets/movie_listview_item.dart';
 import 'search_state.dart';
@@ -10,7 +12,7 @@ import 'search_view_model.dart';
 
 final searchProvider =
     StateNotifierProvider.autoDispose<SearchViewModel, SearchState>(
-        (ref) => SearchViewModel());
+        (ref) => SearchViewModel(getIt<GetSearchSuggestListUseCase>()));
 
 class SearchPage extends ConsumerWidget {
   static const routeName = '/search';

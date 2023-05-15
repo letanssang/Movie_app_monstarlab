@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_app/di/dependency_injection.dart';
 import 'package:movie_app/domain/enums/fetch_state.dart';
 import 'package:movie_app/domain/use_cases/get_search_suggest_list_use_case.dart';
 
-import '../../../../domain/entities/movie/movie.dart';
 import 'search_state.dart';
 
 class SearchViewModel extends StateNotifier<SearchState> {
-  SearchViewModel()
+  final GetSearchSuggestListUseCase getSearchSuggestListUseCase;
+
+  SearchViewModel(this.getSearchSuggestListUseCase)
       : super(SearchState(
             textEditingController: TextEditingController(),
             focusNode: FocusNode()));
@@ -21,7 +21,7 @@ class SearchViewModel extends StateNotifier<SearchState> {
       return;
     }
     try {
-      final suggestions = await getIt<GetSearchSuggestListUseCase>().run(query);
+      final suggestions = await getSearchSuggestListUseCase.run(query);
 
       state = state.copyWith(
           suggestions: suggestions, fetchState: FetchState.success);
@@ -33,10 +33,6 @@ class SearchViewModel extends StateNotifier<SearchState> {
       state = state.copyWith(fetchState: FetchState.error);
       throw Exception('Failed to fetch movies');
     }
-  }
-
-  void updateSuggestions(List<Movie> suggestions) {
-    state = state.copyWith(suggestions: suggestions);
   }
 
   void onChangeHandler() {

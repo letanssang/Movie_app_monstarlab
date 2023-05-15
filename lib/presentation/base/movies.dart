@@ -8,18 +8,24 @@ import 'movies_state.dart';
 
 final moviesProvider =
     StateNotifierProvider<MoviesViewModel, MoviesState>((ref) {
-  return MoviesViewModel();
+  return MoviesViewModel(getIt<GetTrendingMoviesWeekUseCase>(),
+      getIt<GetTrendingMoviesDayUseCase>());
 });
 
 class MoviesViewModel extends StateNotifier<MoviesState> {
-  MoviesViewModel() : super(const MoviesState()) {
+  final GetTrendingMoviesWeekUseCase getTrendingMoviesWeekUseCase;
+  final GetTrendingMoviesDayUseCase getTrendingMoviesDayUseCase;
+
+  MoviesViewModel(
+      this.getTrendingMoviesWeekUseCase, this.getTrendingMoviesDayUseCase)
+      : super(const MoviesState()) {
     fetchMovies();
   }
 
   Future<void> fetchMovies() async {
     try {
-      final trendingWeek = await getIt<GetTrendingMoviesWeekUseCase>().run();
-      final trendingDay = await getIt<GetTrendingMoviesDayUseCase>().run();
+      final trendingWeek = await getTrendingMoviesWeekUseCase.run();
+      final trendingDay = await getTrendingMoviesDayUseCase.run();
       state = state.copyWith(
         trendingWeek: trendingWeek,
         trendingDay: trendingDay,

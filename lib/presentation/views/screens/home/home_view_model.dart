@@ -10,10 +10,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
                 PageController(initialPage: 1, viewportFraction: 0.65),
             currentPage: 0));
 
-  void initPageController(PageController pageController) {
-    state = state.copyWith(pageController: pageController);
-  }
-
   void updateCurrentPage(double currentPage) {
     state = state.copyWith(currentPage: currentPage);
   }
